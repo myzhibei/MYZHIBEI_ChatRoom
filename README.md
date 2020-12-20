@@ -1,4 +1,7 @@
-# 课程设计报告：聊天室系统
+# MYZHIBEI Chat Room
+https://github.com/myzhibei/MYZHIBEI_ChatRoom
+
+Java聊天室系统
 
 POWERD BY MYZHIBEI（彭士杰）
 
