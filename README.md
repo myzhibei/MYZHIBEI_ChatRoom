@@ -104,7 +104,7 @@ BY MYZHIBEI（彭士杰）
 
 1.  Pengsj端点击Send File按钮后弹出选择文件框，选择Pengsj.txt文件
 
-![](media/ffe7d1e3673d0788fd849c3c1e415aef.png)
+![image text](https://github.com/myzhibei/MYZHIBEI_ChatRoom/raw/master/media/ffe7d1e3673d0788fd849c3c1e415aef.png)
 
 1.  点击打开，完成文件上传。
 
