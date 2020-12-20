@@ -39,31 +39,31 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
 ## 3.    详细设计
 
-①TalkClient类：
+### ①TalkClient类：
 
 创建客户端窗口（JFrame），与服务端进行连接创建Socket，弹出输入用户名对话框，输入用户名后创建send和receive线程，获取内容容器ct（Container），添加接收信息框rec（JTextArea嵌套JScrollPane）、发送信息框msg（JTextArea嵌套JScrollPane）、用户列表Contacts（JList嵌套JScrollPane）、发送对象用户名显示标签ToNm（JLabel）发送信息按钮sendM（JButton）和发送文件按钮sendF（JButton）至ct，对每一个组件设置显示文字、颜色、字体、大小等；对于用户列表添加监听，默认选择第一项全体成员，用户选择（点击）用户后更新对象名标签（JLabel）为发送对象名；创建关闭函数用于用户自主关闭，切断Socket连接；
 
-②Send类：
+### ②Send类：
 
 实现Runnable接口作为独立线程运行，TalkClient类创建此线程时传递Socket和用户名，获取Socket的DataOutputStream，使用writeUTF方法创立发送字符流方法send，创立后首先将用户名发送至服务端，在run方法中对TalkClient窗体中SendMessage按钮和SendFile按钮添加监听，用户点击SendMessage后获取发送信息框内容并获取“发送对象用户名显示标签ToNm”的显示文字添加“@”和“：”进行标识后发送至服务端；用户点击SendFile后直接实例化一个sendFile对象；
 
-③sendFile类：
+### ③sendFile类：
 
 首先弹出选择文件框（JFileChooser），选择确定后获取该文件（File）及该文件路径和文件名，使用writeUTF方法发送“file@‘发送对象用户名显示标签ToNm”的显示文字’：文件名”至服务端，随后获取该文件的文件输入流（FileInputStream嵌套DataInputStream），获取文件大小后以每次发送1KB进行循环发送字节流至服务端，发送完毕后关闭文件输入流；
 
-④Receive类：
+### ④Receive类：
 
 实现Runnable接口作为独立线程运行，TalkClient类创建此线程时传递Socket，获取Socket的DataInputStream，在run方法中使用readUTF方法直接接受字符流并显示在TalkClient窗体的消息显示框中，实现信息接收，如果消息以“file” 为开头，则实例化一个receiveFile对象，如果消息为“---Close chat room---”则关闭客户端，如果消息含有“has joined the chat room!”或“has quit the chat room!”则取出用户名并添加到TalkClient的用户列表中或将用户名移除；
 
-⑤receiveFile类：
+### ⑤receiveFile类：
 
 首先弹出是否接收文件对话框（showOptionDialog）询问是否接收文件，点击是后弹出文件保存框（showSaveDialog），选定文件保存路径及文件名后获取文件输出流（FileOutputStream嵌套DataOutputStream），以每次1KB循环接收（read）字节流并写入（write）文件，完成文件接收后关闭文件输出流，点击否后清空接收流中内容并在消息接收框中显示已拒绝接受文件；
 
-⑥MultiTalkServer类:
+### ⑥MultiTalkServer类:
 
 在某一端口创建ServerSocket，开始循环监听（accept），一有客户端连接便创建一个新ServerThread线程，并将所有创建的ServerThread线程保存在一个CopyOnWriteArrayList<ServerThread>中，创建一个关闭方法用于用户自主关闭服务器；
 
-⑦ServerThread类：
+### ⑦ServerThread类：
 
 创建该线程时传递Socket参数，获取该Socket的输入输出流dis、dos（getInputStream()、getOutputStream()），并以此创建信息接收方法receive和信息发送方法send，首先接收客户端发送来的客户端用户姓名并将该用户名保存为该线程的一个成员属性；创建私发（sendSomeone）和群发（sendEveryone）两个方法，两个方法均有四个参数，分别为信息文本字符串、文件字节、文件字节长度、是否为文件，sendSomeone方法首先取出发送对象用户名，若为全体成员（all）则调用sendEveryone方法，若不是则直接遍历所有服务端线程寻找匹配用户名后发送该信息，如果是文件则调用sendFile方法，sendEveryone方法与sendSomeone相同，区别仅仅在于此方法在遍历所有服务端线程时不判断用户名是否匹配；sendFile方法直接使用dos.write方法发送字节流；receiveFile方法使用dis.read方法以每次1023字节循环接收客户端发来的文件字节流并调用sendSomeone方法发送至目标对象客户端；在线程run方法中循环监听（receive方法），如果消息含有“Close chat room”则给所有客户端发送关闭指令（sendEveryone）并调用MultiTalkServer的关闭方法关闭服务器，如果消息为“@”开头则调用sendSomeone方法发送该信息，若为“file”开头即发送文件信息则先给发送对象发送该信息然后调用接收文件receiveFile方法；receive方法在客户端关闭后会出现接收异常，此时中断run方法中的监听循环并调用sendEveryone方法告知该客户端已退出聊天室，然后关闭该线程并将其从CopyOnWriteArrayList<ServerThread>中移除。
 
@@ -71,27 +71,27 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
 # 三、   系统测试
 
-服务端：
+## 服务端：
 
 首先启用服务端，在有客户端连接后在控制台输出客户端用户连接用户名，在控制台输出各种状态信息，比如接收文件等。
 
  
 
-客户端：
+## 客户端：
 
-\1.   启动客户端后首先弹出输入用户名框，在用户列表栏默认选择全体成员。
+1.   启动客户端后首先弹出输入用户名框，在用户列表栏默认选择全体成员。
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
 
 
 
-\2.   点击确认后将自己添加到用户列表
+2.   点击确认后将自己添加到用户列表
 
 再开启另外两个用户端，同样输入用户名后更新所有客户端的用户列表
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
 
-\3.   Pengmy输入文字后点击Send Message按钮后自己客户端显示消息记录，在其他所有客户端则显示Pengmy@all:____;实现群聊
+3.   Pengmy输入文字后点击Send Message按钮后自己客户端显示消息记录，在其他所有客户端则显示Pengmy@all:____;实现群聊
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
 
@@ -99,21 +99,21 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
  
 
-\4.   Pengsj端点击选择Pengmy后，输入文字后点击Send Message后仅在Pengmy端接收到消息，同样Pengmy端可同时发送信息到Pengsj端，实现私聊
+4.   Pengsj端点击选择Pengmy后，输入文字后点击Send Message后仅在Pengmy端接收到消息，同样Pengmy端可同时发送信息到Pengsj端，实现私聊
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
 
-\5.   Pengsj端点击Send File按钮后弹出选择文件框，选择Pengsj.txt文件
+5.   Pengsj端点击Send File按钮后弹出选择文件框，选择Pengsj.txt文件
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
 
-\6.   点击打开，完成文件上传。
+6.   点击打开，完成文件上传。
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
 
  
 
-\7.   Pengmy端接收到Pengsj发送给你文件的提示并弹出是否接收文件对话框
+7.   Pengmy端接收到Pengsj发送给你文件的提示并弹出是否接收文件对话框
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
 
@@ -121,13 +121,13 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
  
 
-\8.   点击是后弹出保存文件对话框，选择文件路径及输入保存文件名；
+8.   点击是后弹出保存文件对话框，选择文件路径及输入保存文件名；
 
 点击否则显示已拒绝接收该文件
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
 
-\9.   点击保存，接收文件成功，实现文件私发
+9.   点击保存，接收文件成功，实现文件私发
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
 
@@ -135,7 +135,7 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
  
 
-\10. Pengsj端点击all后发送图片文件码农.png
+10. Pengsj端点击all后发送图片文件码农.png
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
 
@@ -149,7 +149,7 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
  
 
-\11. 其它所有客户端均接收到该文件，实现文件群发。
+11. 其它所有客户端均接收到该文件，实现文件群发。
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
 
@@ -169,7 +169,7 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
  
 
-\12. 客户端Taow关闭客户端，其它客户端收到Taow退出提示，更新用户列表
+12. 客户端Taow关闭客户端，其它客户端收到Taow退出提示，更新用户列表
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image014.jpg)
 
@@ -177,7 +177,7 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
  
 
-\13. 客户Pengmy发出关闭服务器指令，实现用户自主关闭服务器
+13. 客户Pengmy发出关闭服务器指令，实现用户自主关闭服务器
 
 ![img](https://gitee.com/myzhibei/img/raw/master/clip_image014.jpg)
 
@@ -187,11 +187,11 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
 # 四、   课程设计总结
 
-(一)、实现的系统功能
+## (一)、实现的系统功能
 
 实现了用户客户端GUI，用户私发、群发文字信息、用户私发、群发文件、用户自主关闭服务器。
 
-(二)、使用的Java编程技术
+## (二)、使用的Java编程技术
 
 1．使用了多线程技术创建用户发送线程、用户接收线程、服务器对应每个用户的服务器线程；
 
@@ -207,7 +207,7 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
 7．使用文件输入输出流实现文件上传下载；
 
-(三)、遇到的问题及解决
+## (三)、遇到的问题及解决
 
 1．服务端用什么储存Socket，后来看了很多视频发现用CopyOnWriteArrayList很适合此场景，ArrayList有很多不同的子类，根据具体情况要具体分析采取合适的类；
 
