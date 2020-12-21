@@ -79,107 +79,71 @@ TalkClient类为客户端主线程用于创建客户端窗口以及初始化客�
 
 ## 客户端：
 
-1.   启动客户端后首先弹出输入用户名框，在用户列表栏默认选择全体成员。
+1.  启动客户端后首先弹出输入用户名框，在用户列表栏默认选择全体成员。
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
+![img](https://gitee.com/myzhibei/img/raw/master/6f919e4862452120a5e4d4f65127da16.png)
 
-
-
-2.   点击确认后将自己添加到用户列表
+2.    
+    点击确认后将自己添加到用户列表
 
 再开启另外两个用户端，同样输入用户名后更新所有客户端的用户列表
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
+![img](https://gitee.com/myzhibei/img/raw/master/7af74cc876e34a0dd986a778e6d8623b.png)
 
-3.   Pengmy输入文字后点击Send Message按钮后自己客户端显示消息记录，在其他所有客户端则显示Pengmy@all:____;实现群聊
+3.  Pengmy输入文字后点击Send
+    Message按钮后自己客户端显示消息记录，在其他所有客户端则显示Pengmy\@all:____;实现群聊
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
+![img](https://gitee.com/myzhibei/img/raw/master/427ec38768077732f520457a1f4c577b.png)
 
+4.  Pengsj端点击选择Pengmy后，输入文字后点击Send
+    Message后仅在Pengmy端接收到消息，同样Pengmy端可同时发送信息到Pengsj端，实现私聊
 
+![img](https://gitee.com/myzhibei/img/raw/master/64e22b3147d2ec71bf54e6108a7a4098.png)
 
- 
+5.  Pengsj端点击Send File按钮后弹出选择文件框，选择Pengsj.txt文件
 
-4.   Pengsj端点击选择Pengmy后，输入文字后点击Send Message后仅在Pengmy端接收到消息，同样Pengmy端可同时发送信息到Pengsj端，实现私聊
+![img](https://gitee.com/myzhibei/img/raw/master/ffe7d1e3673d0788fd849c3c1e415aef.png)
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
+6.  点击打开，完成文件上传。
 
-5.   Pengsj端点击Send File按钮后弹出选择文件框，选择Pengsj.txt文件
+![img](https://gitee.com/myzhibei/img/raw/master/3c1e224040717ec80c3212a4df088ed3.png)
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
+7.  Pengmy端接收到Pengsj发送给你文件的提示并弹出是否接收文件对话框
 
-6.   点击打开，完成文件上传。
+![img](https://gitee.com/myzhibei/img/raw/master/f174169614f3035c3187d996c9749ba6.png)
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image004.jpg)
+8.  点击是后弹出保存文件对话框，选择文件路径及输入保存文件名；
 
- 
+    点击否则显示已拒绝接收该文件
 
-7.   Pengmy端接收到Pengsj发送给你文件的提示并弹出是否接收文件对话框
+![img](https://gitee.com/myzhibei/img/raw/master/761adf65604cbbb921446e757d764249.png)
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
+9.  点击保存，接收文件成功，实现文件私发
 
+![img](https://gitee.com/myzhibei/img/raw/master/ba9d3da47bee63060bf970f8eba4c4ea.png)
 
+10.  Pengsj端点击all后发送图片文件码农.png
 
- 
+![img](https://gitee.com/myzhibei/img/raw/master/a4f1ef5fb57552f6aa2f5ad0ba885a99.png)
 
-8.   点击是后弹出保存文件对话框，选择文件路径及输入保存文件名；
+![img](https://gitee.com/myzhibei/img/raw/master/98ed3f73a07ea6eea156a7eafc2b11e1.png)
 
-点击否则显示已拒绝接收该文件
+11.  其它所有客户端均接收到该文件，实现文件群发。
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
+![img](https://gitee.com/myzhibei/img/raw/master/d52ca1b85f5ae8a3de003c87b4978790.png)
 
-9.   点击保存，接收文件成功，实现文件私发
+![img](https://gitee.com/myzhibei/img/raw/master/6ff05e54b5c59adaff2a723f53f33c4c.png)
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
+![img](https://gitee.com/myzhibei/img/raw/master/6e5fe74b090eefc8243ff0d9a412b1b2.png)
 
+12.  客户端Taow关闭客户端，其它客户端收到Taow退出提示，更新用户列表
 
+![img](https://gitee.com/myzhibei/img/raw/master/2d77af16670098b6c0a8629edff2d9df.png)
 
- 
+13.  客户Pengmy发出关闭服务器指令，实现用户自主关闭服务器
 
-10. Pengsj端点击all后发送图片文件码农.png
+![img](https://gitee.com/myzhibei/img/raw/master/4ece62b1ea6898c2e9a4a2067517098d.png)
 
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
-
- 
-
- 
-
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
-
-
-
- 
-
-11. 其它所有客户端均接收到该文件，实现文件群发。
-
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image012.jpg)
-
- 
-
- 
-
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image014.jpg)
-
-
-
- 
-
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image014.jpg)
-
- 
-
- 
-
-12. 客户端Taow关闭客户端，其它客户端收到Taow退出提示，更新用户列表
-
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image014.jpg)
-
-
-
- 
-
-13. 客户Pengmy发出关闭服务器指令，实现用户自主关闭服务器
-
-![img](https://gitee.com/myzhibei/img/raw/master/clip_image014.jpg)
 
 关闭服务器及所有客户端，到此各功能测试结束。
 
