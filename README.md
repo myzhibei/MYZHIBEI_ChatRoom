@@ -3,7 +3,7 @@ https://github.com/myzhibei/MYZHIBEI_ChatRoom
 
 Java聊天室系统
 
-POWERD BY MYZHIBEI（彭士杰）
+POWERD BY MYZHIBEI
 
 # 一、   设计目的
 
